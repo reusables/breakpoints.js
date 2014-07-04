@@ -16,8 +16,7 @@ call this "modular responsive design".
 But with media queries, this is not easy to do. You end up copying rules across breakpoints in order
 to reproduce the layout of the block. Media queries are only concerned with the width of the screen,
 whereas the layout of the block is determined by the width of the block itself. It would be much
-easier to accomplish this if breakpoints were defined on individual blocks rather than on the screen,
-as with media queries.
+easier to accomplish this if breakpoints were defined on individual blocks rather than on the screen.
 
 Enter `breakpoints.js`, a jQuery plugin that makes modular responsive design possible by adding
 classes to elements based on defined breakpoints. And voila! You have modular responsive design.
