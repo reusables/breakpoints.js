@@ -24,20 +24,78 @@
   .test.large {
     background-color: blue;
   }
+
+  .parent {
+    padding: 20px;
+    background-color: orange;
+  }
+
+  .parent.small {
+    max-width: 200px;
+  }
+
+  .parent.medium {
+    max-width: 400px;
+  }
+
+  .parent.large {
+    max-width: 600px;
+  }
+
   </style>
 </head>
 <body>
 
-  <h1>Element Queries</h1>
+  <h1>Breakpoint.js</h1>
 
   <ul>
-    <li>default - gray</li>
-    <li>.small - red</li>
-    <li>.medium - green</li>
-    <li>.large - blue</li>
+    <li>.test - gray</li>
+    <li>.test.small - red</li>
+    <li>.test.medium - green</li>
+    <li>.test.large - blue</li>
+    <li>.parent - orange</li>
   </ul>
 
+  <h2>No Parent</h2>
   <div class="test"></div>
+
+  <h2>Small Parent</h2>
+  <div class="parent small">
+    <div class="test"></div>
+  </div>
+
+  <h2>Medium Parent</h2>
+  <div class="parent medium">
+    <div class="test"></div>
+  </div>
+
+  <h2>Large Parent</h2>
+  <div class="parent large">
+    <div class="test"></div>
+  </div>
+
+
+<script>
+$(function () {
+
+  $.breakpoints({
+    '.test': {
+      'small': [0, 320],
+      'medium': [320, 480],
+      'large': [480, null]
+    }
+  });
+
+  $.breakpoints({
+    '.test': {
+      'small': [0, 320],
+      'medium': [320, 480],
+      'large': [480, null]
+    }
+  });
+
+});
+</script>
 
 </body>
 </html>
