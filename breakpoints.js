@@ -1,10 +1,8 @@
+/* * * * * * * * * */
+/*= breakpoints.js =*/
+/* * * * * * * * * */
+
 (function ($) {
-
-
-  /* * * * * * * * * */
-  /*= breakpoint.js =*/
-  /* * * * * * * * * */
-
 
 
   /*= CLASS DEFINITIONS =*/
@@ -16,14 +14,16 @@
     this.max = max || Infinity;
   }
 
-  Breakpoint.prototype.evaluate = function () {
-    var breakpoint = this;
-    this.$elements.each(function (i, el) {
-      var $el = $(el);
-      var width = $el.outerWidth();
-      var match = breakpoint.min <= width && width < breakpoint.max;
-      $el.toggleClass(breakpoint.name, match);
-    });
+  Breakpoint.prototype = {
+    evaluate: function () {
+      var breakpoint = this;
+      this.$elements.each(function (i, el) {
+        var $el = $(el);
+        var width = $el.outerWidth();
+        var match = breakpoint.min <= width && width < breakpoint.max;
+        $el.toggleClass(breakpoint.name, match);
+      });
+    }
   };
 
 

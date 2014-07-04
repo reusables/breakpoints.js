@@ -4,9 +4,8 @@
   <meta charset="utf-8">
   <title>JS Bin</title>
 
-
   <script src="jquery-1.11.1.min.js"></script>
-  <script src="breakpoint.js"></script>
+  <script src="breakpoints.js"></script>
   <style>
   .test {
     background-color: gray;
@@ -46,7 +45,7 @@
 </head>
 <body>
 
-  <h1>Breakpoint.js</h1>
+  <h1>Breakpoints.js</h1>
 
   <ul>
     <li>.test - gray</li>
@@ -77,14 +76,6 @@
 
 <script>
 $(function () {
-
-  $.breakpoints({
-    '.test': {
-      'small': [0, 320],
-      'medium': [320, 480],
-      'large': [480, null]
-    }
-  });
 
   $.breakpoints({
     '.test': {
