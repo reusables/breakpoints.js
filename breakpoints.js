@@ -63,8 +63,8 @@
    *```
    *
    * @param String name Breakpoint name. Class name will be added to element for styling.
-   * @param Number min Minimum width for breakpoint. Set to 0 if falsy.
-   * @param Number max Maximum width for breakpoint. Set to Infinity if falsy.
+   * @param Number min Minimum width for breakpoint. Defaults to 0 if falsy.
+   * @param Number max Maximum width for breakpoint. Defaults to Infinity if falsy.
    * @return jQuery Returns original jQuery elements for method chaining.
    */
   $.fn.breakpoint = function (name, min, max) {
