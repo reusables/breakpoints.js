@@ -6,31 +6,21 @@ jQuery plugin that makes modular responsive design possible by adding classes to
 
 ## Why?
 
-In responsive web design, it's mostly about using media queries to adjust the layout as the screen
-increases in size. Typically, this means breaking the content from a stacked layout, into additional
-columns. But between breakpoints, content is allowed to stretch. So each block in a column could
-potentially have alternate layouts based on the narrowness of the column it is in.
+Let's say I have a block in a responsive design. I have three versions of the block: "small", "medium",
+and "large". Imagine this block in a single column layout. It starts off at "medium", then stretches
+to "large", until eventually another column is introduced, and it goes to "small" because the column
+it is in is made smaller in order to fit the newly added column. This same sort of thing happens as
+each additional column is introduced and the columns stretch. Until a better term comes along, we can
+call this "modular responsive design".
 
-Imagine, that the block started out with a "medium" layout for the block, within a stacked mobile
-design. This block would stretch to fill the width of screen, eventually revealing a "large" version
-of the block. Then, when we hit tablet, the content breaks into two columns. But to fit the two
-columns, the columns go back to a narrower width, forcing the block to switch to a "small" layout.
-Now these two columns stretch as the screen gets wider, with the block switching through it's different
-sizes. This behavior repeating each time a new column breaks out and the column gets narrower, then
-stretches with the screen size. Until a better term comes along, this could be called "modular
-responsive design", where a block on the page has it's own set of breakpoints and layout rules at these
-breakpoints.
-
-But with media queries, this is not easy to do as you have to either copy styles from a previous
-breakpoint into the current one or else undo styles from the previous breakpoint in order resulting
-in a stylesheet that is a bear to maintain.
-
-It would be much easier to accomplish this if breakpoints were defined on individual blocks rather
-than on the screen. In fact, why not treat the whole document as a block itself and define breakpoints
-on everything the same way. Maybe we don't really need media queries?
+But with media queries, this is not easy to do. You end up copying rules across breakpoints in order
+to reproduce the layout of the block. Media queries are only concerned with the width of the screen,
+whereas the layout of the block is determined by the width of the block itself. It would be much
+easier to accomplish this if breakpoints were defined on individual blocks rather than on the screen,
+as with media queries.
 
 Enter `breakpoints.js`, a jQuery plugin that makes modular responsive design possible by adding
-classes to elements based on defined breakpoints.
+classes to elements based on defined breakpoints. And voila! You have modular responsive design.
 
 
 
@@ -53,7 +43,7 @@ $(function () {
 ```
 
 This example defines breakpoints for all elements matching the `.article` jQuery selector string.
-Each breakpoint has a name (`small`, `medium`, `large`) with a range of widths.
+Each breakpoint has a name (`small`, `medium`, `large`) each with a range of widths.
 
 You can also define breakpoints one by one like so:
 
@@ -70,6 +60,7 @@ $(function () {
 
 The breakpoint name will be added to the element when the element width matches the breakpoint range.
 Once breakpoints are defined, style the classes corresponding to the breakpoints.
+
 
 
 ## API
