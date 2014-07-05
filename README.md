@@ -60,6 +60,7 @@ $(function () {
 The breakpoint name will be added to the element when the element width matches the breakpoint range.
 Once breakpoints are defined, style the classes corresponding to the breakpoints.
 
+See the [demo](http://reusables.io/breakpoints.js/demo/) for a full example.
 
 
 ## API
