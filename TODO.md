@@ -1,5 +1,3 @@
-+ Deploy demo page to github pages.
-+ Update README.md with link to demo page.
 + Blog and tweet. This is exciting stuff.
 + Get into bower. Tweet.
 + Get into npm? Tweet.
