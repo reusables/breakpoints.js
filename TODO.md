@@ -1,5 +1,5 @@
-+ Demos
-  + Article with small, medium, and large modifiers. Static, responsive, and 3 column layout.
++ Deploy demo page to github pages.
++ Update README.md with link to demo page.
 + Blog and tweet. This is exciting stuff.
 + Get into bower. Tweet.
 + Get into npm? Tweet.
