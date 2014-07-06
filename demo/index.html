@@ -8,19 +8,109 @@
   <script src="../breakpoints.js"></script>
 
   <style>
-
   * {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
   }
 
-  /* article styles */
+  body {
+    margin: 0;
+    padding: 10px;
+  }
+
+  code pre {
+    width: 100%;
+    overflow: auto;
+    background-color: #f8f8f8;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+  }
+  </style>
+
+</head>
+<body>
+
+  <h1>Breakpoints.js Demo</h1>
+
+  <p>This demo page walks through a simple example of a design with articles.</p>
+
+
+  <h2>Simple Styling with Modifier Classes</h2>
+
+  <p>In our design we have articles. Each article has a title, image, and a paragraph. The article
+   has three sizes and an article inherits the styles for a particular size by simply adding a modifier
+   class.</p>
+
+  <h3>HTML</h3>
+  <code><pre>
+&lt;article class="small"&gt;
+  &lt;h1&gt;Small Article&lt;/h1&gt;
+  &lt;img src="http://placehold.it/400x300" /&gt;
+  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;article class="medium"&gt;
+  &lt;h1&gt;Medium Article&lt;/h1&gt;
+  &lt;img src="http://placehold.it/400x300" /&gt;
+  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;article class="large"&gt;
+  &lt;h1&gt;Large Article&lt;/h1&gt;
+  &lt;img src="http://placehold.it/400x300" /&gt;
+  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.&lt;/p&gt;
+&lt;/article&gt;
+  </pre></code>
+
+  <h3>CSS</h3>
+  <code><pre>
+article {
+  border: 1px solid gray;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  overflow: hidden; /* clearfix */
+}
+
+article.small img {
+  width: 100%;
+}
+
+article.medium img {
+  width: 50%;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+article.large img {
+  width: 40%;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+article.large h1 {
+  float: left;
+  padding-left: 40%;
+  margin-left: 10px;
+  width: 100%;
+  margin-bottom: -28px;
+  margin-top: 10px;
+}
+
+article.large p {
+  margin-top: 48px;
+}
+  </pre></code>
+
+  <style>
   article {
     border: 1px solid gray;
     padding: 0 10px;
     margin-bottom: 20px;
-    overflow: hidden;
+    overflow: hidden; /* clearfix */
   }
 
   article.small img {
@@ -32,10 +122,6 @@
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
-  }
-
-  article.large {
-    position: relative;
   }
 
   article.large img {
@@ -57,63 +143,9 @@
   article.large p {
     margin-top: 48px;
   }
-
-
-  /* static example */
-  .example-static article.small {
-    width: 320px;
-  }
-
-  .example-static article.medium {
-    width: 480px;
-  }
-
-  .example-static article.large {
-    width: 768px;
-  }
-
-
-  /* responsive example */
-  .example-responsive article {
-    float: left;
-    margin-right: 20px;
-  }
-
-  .example-responsive.col-1 article {
-    width: 100%;
-  }
-
-  .example-responsive.col-2 article {
-    width: -webkit-calc(50% - 20px);
-    width: calc(50% - 20px);
-  }
-
-  .example-responsive.col-3 article {
-    width: -webkit-calc(33.33% - 20px);
-    width: calc(33.33% - 20px);
-  }
-
-  .example-responsive.col-4 article {
-    width: -webkit-calc(25% - 20px);
-    width: calc(25% - 20px);
-  }
-
-  .example-responsive.col-5 article {
-    width: -webkit-calc(20% - 20px);
-    width: calc(20% - 20px);
-  }
-
-  .example-responsive.col-6 article {
-    width: -webkit-calc(16.66% - 20px);
-    width: calc(16.66% - 20px);
-  }
   </style>
 
-</head>
-<body>
-
-  <h1>Breakpoints.js Demo</h1>
-
+  <h3>Result</h3>
   <div class="example-static">
     <article class="small">
       <h1>Small Article</h1>
@@ -133,6 +165,59 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
     </article>
   </div>
+
+  <style>
+  .example-static {
+    zoom: .5;
+    min-width: 320px;
+    max-width: 768px;
+  }
+  .example-static article.small {
+    width: 40%;
+  }
+
+  .example-static article.medium {
+    width: 70%;
+  }
+
+  .example-static article.large {
+    width: 100%;
+  }
+  </style>
+
+  <p>Nothing complicated so far. Just plain old html and css. But this next piece, defining
+    breakpoints, really isn't that complicated either.</p>
+
+
+  <h2>Define Breakpoints</h2>
+
+  <p>For this example, when the article width is below 350 pixels wide we want "small". When between
+    350 and 450 pixels we want "medium". And everthing above that "large".</p>
+
+  <h3>Javascript</h3>
+  <code><pre>
+$(function () {
+
+  $.breakpoints({
+    'article': {
+      'small': [0, 350],
+      'medium': [350, 450],
+      'large': [450, null]
+    }
+  });
+
+});
+  </pre></code>
+
+  <p>The plugin will add the "small", "medium", or "large" class to the article when it's width
+    matches the corresponding breakpoint. Pretty simple.</p>
+
+
+<!-- TODO -->
+
+
+
+
 
   <div class="example-responsive">
     <article>
@@ -172,18 +257,62 @@
     </article>
   </div>
 
+  <style>
+  .example-responsive {
+    zoom: .5;
+    min-width: 320px;
+  }
+
+  .example-responsive article {
+    float: left;
+    margin-right: 20px;
+  }
+
+  .example-responsive.col-1 article {
+    width: 100%;
+  }
+
+  .example-responsive.col-2 article {
+    width: -webkit-calc(50% - 20px);
+    width: calc(50% - 20px);
+  }
+
+  .example-responsive.col-3 article {
+    width: -webkit-calc(33.33% - 20px);
+    width: calc(33.33% - 20px);
+  }
+
+  .example-responsive.col-4 article {
+    width: -webkit-calc(25% - 20px);
+    width: calc(25% - 20px);
+  }
+
+  .example-responsive.col-5 article {
+    width: -webkit-calc(20% - 20px);
+    width: calc(20% - 20px);
+  }
+
+  .example-responsive.col-6 article {
+    width: -webkit-calc(16.66% - 20px);
+    width: calc(16.66% - 20px);
+  }
+  </style>
+
+
   <script>
-  $.breakpoints({
-    '.example-responsive': {
-      'col-1': [0, 550],
-      'col-2': [550, 1000],
-      'col-3': [1000, null]
-    },
-    '.example-responsive article': {
-      'small': [0, 350],
-      'medium': [350, 450],
-      'large': [450, null]
-    }
+  $(function () {
+    $.breakpoints({
+      '.example-responsive': {
+        'col-1': [0, 550],
+        'col-2': [550, 1000],
+        'col-3': [1000, null]
+      },
+      '.example-responsive article': {
+        'small': [0, 350],
+        'medium': [350, 450],
+        'large': [450, null]
+      }
+    });
   });
   </script>
 
