@@ -27,6 +27,20 @@
     border-radius: 3px;
     border: 1px solid #ddd;
   }
+
+  section {
+    margin: 40px 0;
+  }
+
+  h1, h2 {
+    border-bottom: 1px solid #ddd;
+  }
+
+  [class^="example-"] .figure {
+    zoom: .5;
+    min-width: 320px;
+    max-width: 768px;
+  }
   </style>
 
 </head>
@@ -37,14 +51,15 @@
   <p>This demo page walks through a simple example of a design with articles.</p>
 
 
-  <h2>Simple Styling with Modifier Classes</h2>
+  <section>
+    <h2>1. Simple Styling with Modifier Classes</h2>
 
-  <p>In our design we have articles. Each article has a title, image, and a paragraph. The article
-   has three sizes and an article inherits the styles for a particular size by simply adding a modifier
-   class.</p>
+    <p>In our design we have articles. Each article has a title, image, and a paragraph. The article
+     has three sizes and an article inherits the styles for a particular size by simply adding a modifier
+     class.</p>
 
-  <h3>HTML</h3>
-  <code><pre>
+    <h3>HTML</h3>
+    <code><pre>
 &lt;article class="small"&gt;
   &lt;h1&gt;Small Article&lt;/h1&gt;
   &lt;img src="http://placehold.it/400x300" /&gt;
@@ -62,10 +77,10 @@
   &lt;img src="http://placehold.it/400x300" /&gt;
   &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.&lt;/p&gt;
 &lt;/article&gt;
-  </pre></code>
+    </pre></code>
 
-  <h3>CSS</h3>
-  <code><pre>
+    <h3>CSS</h3>
+    <code><pre>
 article {
   border: 1px solid gray;
   padding: 0 10px;
@@ -103,102 +118,171 @@ article.large h1 {
 article.large p {
   margin-top: 48px;
 }
-  </pre></code>
+    </pre></code>
 
-  <style>
-  article {
-    border: 1px solid gray;
-    padding: 0 10px;
-    margin-bottom: 20px;
-    overflow: hidden; /* clearfix */
-  }
+    <style>
+    article {
+      border: 1px solid gray;
+      padding: 0 10px;
+      margin-bottom: 20px;
+      overflow: hidden; /* clearfix */
+    }
 
-  article.small img {
-    width: 100%;
-  }
+    article.small img {
+      width: 100%;
+    }
 
-  article.medium img {
-    width: 50%;
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
+    article.medium img {
+      width: 50%;
+      float: left;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
 
-  article.large img {
-    width: 40%;
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
+    article.large img {
+      width: 40%;
+      float: left;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
 
-  article.large h1 {
-    float: left;
-    padding-left: 40%;
-    margin-left: 10px;
-    width: 100%;
-    margin-bottom: -28px;
-    margin-top: 10px;
-  }
+    article.large h1 {
+      float: left;
+      padding-left: 40%;
+      margin-left: 10px;
+      width: 100%;
+      margin-bottom: -28px;
+      margin-top: 10px;
+    }
 
-  article.large p {
-    margin-top: 48px;
-  }
-  </style>
+    article.large p {
+      margin-top: 48px;
+    }
+    </style>
 
-  <h3>Result</h3>
-  <div class="example-static">
-    <article class="small">
-      <h1>Small Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
+    <h3>Result</h3>
+    <div class="example-static">
+      <div class="figure">
+        <article class="small">
+          <h1>Small Article</h1>
+          <img src="http://placehold.it/400x300" />
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+        </article>
 
-    <article class="medium">
-      <h1>Medium Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
+        <article class="medium">
+          <h1>Medium Article</h1>
+          <img src="http://placehold.it/400x300" />
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+        </article>
 
-    <article class="large">
-      <h1>Large Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
-  </div>
+        <article class="large">
+          <h1>Large Article</h1>
+          <img src="http://placehold.it/400x300" />
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+        </article>
+      </div>
+    </div>
 
-  <style>
-  .example-static {
-    zoom: .5;
-    min-width: 320px;
-    max-width: 768px;
-  }
-  .example-static article.small {
-    width: 40%;
-  }
+    <style>
+    .example-static article.small {
+      width: 40%;
+    }
 
-  .example-static article.medium {
-    width: 70%;
-  }
+    .example-static article.medium {
+      width: 70%;
+    }
 
-  .example-static article.large {
-    width: 100%;
-  }
-  </style>
+    .example-static article.large {
+      width: 100%;
+    }
+    </style>
 
-  <p>Nothing complicated so far. Just plain old html and css. But this next piece, defining
-    breakpoints, really isn't that complicated either.</p>
+    <p>Nothing complicated so far. Just plain old html and css. But this next piece, defining
+      breakpoints, really isn't that complicated either.</p>
+  </section>
 
+  <section>
+    <h2>2. Define Breakpoints</h2>
 
-  <h2>Define Breakpoints</h2>
+    <p>For this example, when the article width is below 350 pixels wide we want "small". When between
+      350 and 450 pixels we want "medium". And everthing above that "large".</p>
 
-  <p>For this example, when the article width is below 350 pixels wide we want "small". When between
-    350 and 450 pixels we want "medium". And everthing above that "large".</p>
+    <h3>Javascript</h3>
+    <code><pre>
+  $(function () {
 
-  <h3>Javascript</h3>
-  <code><pre>
+    $.breakpoints({
+      'article': {
+        'small': [0, 350],
+        'medium': [350, 450],
+        'large': [450, null]
+      }
+    });
+
+  });
+    </pre></code>
+
+    <p>The plugin will add the "small", "medium", or "large" class to the article when it's width
+      matches the corresponding breakpoint. Pretty simple.</p>
+
+    <h3>Result</h3>
+
+    <p>Resize the example below, by resizing your window or using the controls, to see the effect. Note: no media queries are used and the modifier class is not hard coded on the article.</p>
+
+    <div class="example-simple">
+      <p class="controls">
+        <input type="button" value="300px" />
+        <input type="button" value="400px" />
+        <input type="button" value="500px" />
+        <input type="button" value="reset" />
+      </p>
+      <div class="figure">
+        <article>
+          <h1>Article</h1>
+          <img src="http://placehold.it/400x300" />
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+        </article>
+      </div>
+      <script>
+      $(function () {
+        $.breakpoints({
+          '.example-simple article': {
+            'small': [0, 350],
+            'medium': [350, 450],
+            'large': [450, null]
+          }
+        });
+
+        $('.example-simple').on('click', '.controls input[type=button]', function (event) {
+          var $el = $(this);
+          var width = $el.val();
+          var article = $el.closest('.example-simple').find('.figure article');
+          if (width === 'reset') {
+            width = '';
+          }
+          article.css('width', width);
+          $(window).resize();
+        });
+      });
+      </script>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Watch it Work in a Responsive Layout</h2>
+
+    <p>Creating a responsive layout is easy too. Figure out your modifier classes then define breakpoints.</p>
+
+    <h3>Javascript</h3>
+    <code><pre>
 $(function () {
 
   $.breakpoints({
+    '.layout': {
+      'col-1': [0, 550],
+      'col-2': [550, 1000],
+      'col-3': [1000, null]
+    },
     'article': {
       'small': [0, 350],
       'medium': [350, 450],
@@ -207,114 +291,137 @@ $(function () {
   });
 
 });
-  </pre></code>
+    </pre></code>
 
-  <p>The plugin will add the "small", "medium", or "large" class to the article when it's width
-    matches the corresponding breakpoint. Pretty simple.</p>
+    <h3>Result</h3>
 
+    <p>Resize your window or use the controls to change the width of the example below.</p>
 
-<!-- TODO -->
+    <div class="example-responsive-layout">
+      <p class="controls">
+        <input type="button" value="300px" />
+        <input type="button" value="400px" />
+        <input type="button" value="500px" />
+        <input type="button" value="600px" />
+        <input type="button" value="800px" />
+        <input type="button" value="950px" />
+        <input type="button" value="1000px" />
+        <input type="button" value="1300px" />
+        <input type="button" value="1500px" />
+        <input type="button" value="reset" />
+      </p>
+      <div class="figure">
 
+        <div class="layout">
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
 
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
 
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
 
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
 
-  <div class="example-responsive">
-    <article>
-      <h1>Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
 
-    <article>
-      <h1>Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+        </div>
 
-    <article>
-      <h1>Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
+      </div><!-- /.figure -->
 
-    <article>
-      <h1>Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
-
-    <article>
-      <h1>Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
-
-    <article>
-      <h1>Article</h1>
-      <img src="http://placehold.it/400x300" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
-    </article>
-  </div>
-
-  <style>
-  .example-responsive {
-    zoom: .5;
-    min-width: 320px;
-  }
-
-  .example-responsive article {
-    float: left;
-    margin-right: 20px;
-  }
-
-  .example-responsive.col-1 article {
-    width: 100%;
-  }
-
-  .example-responsive.col-2 article {
-    width: -webkit-calc(50% - 20px);
-    width: calc(50% - 20px);
-  }
-
-  .example-responsive.col-3 article {
-    width: -webkit-calc(33.33% - 20px);
-    width: calc(33.33% - 20px);
-  }
-
-  .example-responsive.col-4 article {
-    width: -webkit-calc(25% - 20px);
-    width: calc(25% - 20px);
-  }
-
-  .example-responsive.col-5 article {
-    width: -webkit-calc(20% - 20px);
-    width: calc(20% - 20px);
-  }
-
-  .example-responsive.col-6 article {
-    width: -webkit-calc(16.66% - 20px);
-    width: calc(16.66% - 20px);
-  }
-  </style>
-
-
-  <script>
-  $(function () {
-    $.breakpoints({
-      '.example-responsive': {
-        'col-1': [0, 550],
-        'col-2': [550, 1000],
-        'col-3': [1000, null]
-      },
-      '.example-responsive article': {
-        'small': [0, 350],
-        'medium': [350, 450],
-        'large': [450, null]
+      <style>
+      .example-responsive-layout .figure {
+        max-width: none;
+        margin-right: 10px;
       }
-    });
-  });
-  </script>
+
+      .example-responsive-layout .figure .layout article {
+        float: left;
+        margin-right: 20px;
+      }
+
+      .example-responsive-layout .figure .layout.col-1 article {
+        width: 100%;
+      }
+
+      .example-responsive-layout .figure .layout.col-2 article {
+        width: -webkit-calc(50% - 20px);
+        width: calc(50% - 20px);
+      }
+
+      .example-responsive-layout .figure .layout.col-3 article {
+        width: -webkit-calc(33.33% - 20px);
+        width: calc(33.33% - 20px);
+      }
+
+      .example-responsive-layout .figure .layout.col-4 article {
+        width: -webkit-calc(25% - 20px);
+        width: calc(25% - 20px);
+      }
+
+      .example-responsive-layout .figure .layout.col-5 article {
+        width: -webkit-calc(20% - 20px);
+        width: calc(20% - 20px);
+      }
+
+      .example-responsive-layout .figure .layout.col-6 article {
+        width: -webkit-calc(16.66% - 20px);
+        width: calc(16.66% - 20px);
+      }
+      </style>
+
+      <script>
+      $(function () {
+        $.breakpoints({
+          '.example-responsive-layout .figure .layout': {
+            'col-1': [0, 550],
+            'col-2': [550, 1000],
+            'col-3': [1000, null]
+          },
+          '.example-responsive-layout .figure .layout article': {
+            'small': [0, 350],
+            'medium': [350, 450],
+            'large': [450, null]
+          }
+        });
+
+        $('.example-responsive-layout').on('click', '.controls input[type=button]', function (event) {
+          var $el = $(this);
+          var width = $el.val();
+          var layout = $el.closest('.example-responsive-layout').find('.figure .layout');
+          if (width === 'reset') {
+            width = '';
+          }
+          layout.css('width', width);
+          $(window).resize();
+        });
+      });
+      </script>
+    </div><!-- /.example-responsive-layout -->
+  </section>
 
 </body>
 </html>
