@@ -20,8 +20,9 @@
         "breakpoints",
         "responsive",
         "modular",
-        "element query",
-        "element queries",
+        "element",
+        "query",
+        "queries",
         "jquery",
         "plugin"
     ],
