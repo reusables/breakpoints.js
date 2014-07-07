@@ -4,6 +4,14 @@ jQuery plugin that makes modular responsive design possible by adding classes to
 
 
 
+## Bower
+
+```shell
+bower install --save breakpoints-js
+```
+
+
+
 ## Why?
 
 Let's say I have a block in a responsive design. I have three versions of the block: "small", "medium",
