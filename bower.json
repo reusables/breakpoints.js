@@ -1,0 +1,26 @@
+{
+  "name": "breakpoints.js",
+  "main": "breakpoints.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reusables/breakpoints.js",
+  "authors": [
+    "Joshua Stoutenburg <jehoshua02@gmail.com>"
+  ],
+  "description": "jQuery plugin that makes modular responsive design possible by adding classes to elements based on defined breakpoints.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "breakpoints",
+    "responsive",
+    "modular",
+    "element query",
+    "element queries",
+    "jquery",
+    "plugin"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">= 1.11.1"
+  }
+}
