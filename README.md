@@ -2,12 +2,7 @@
 
 jQuery plugin that makes modular responsive design possible by adding classes to elements based on defined breakpoints.
 
-If you like this library throw me some change on [gittip](https://www.gittip.com/jstoutenburg/).
-
-<script data-gittip-username="jstoutenburg"
-        data-gittip-widget="button"
-        src="//gttp.co/v1.js"\>
-</script\>
+If you like this library, and want to see more, throw me some change on [gittip](https://www.gittip.com/jstoutenburg/)!
 
 ## Bower
 
