@@ -211,16 +211,32 @@ article.large p {
     <code><pre>
   $(function () {
 
-    $.breakpoints({
-      'article': {
-        'small': [0, 350],
-        'medium': [350, 450],
-        'large': [450, null]
-      }
-    });
+    Reusables.Breakpoints.on('.example-simple article')
+      .define([0, 350], { name: 'small' })
+      .define([350, 450], { name: 'medium' })
+      .define([450, Infinity], { name: 'large' });
 
   });
     </pre></code>
+    <script>
+    $(function () {
+      Reusables.Breakpoints.on('.example-simple article')
+        .define([0, 350], { name: 'small' })
+        .define([350, 450], { name: 'medium' })
+        .define([450, Infinity], { name: 'large' });
+
+      $('.example-simple').on('click', '.controls input[type=button]', function (event) {
+        var $el = $(this);
+        var width = $el.val();
+        var article = $el.closest('.example-simple').find('.figure article');
+        if (width === 'reset') {
+          width = '';
+        }
+        article.css('width', width);
+        $(window).resize();
+      });
+    });
+    </script>
 
     <p>The plugin will add the "small", "medium", or "large" class to the article when it's width
       matches the corresponding breakpoint. Pretty simple.</p>
@@ -243,28 +259,6 @@ article.large p {
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
         </article>
       </div>
-      <script>
-      $(function () {
-        $.breakpoints({
-          '.example-simple article': {
-            'small': [0, 350],
-            'medium': [350, 450],
-            'large': [450, null]
-          }
-        });
-
-        $('.example-simple').on('click', '.controls input[type=button]', function (event) {
-          var $el = $(this);
-          var width = $el.val();
-          var article = $el.closest('.example-simple').find('.figure article');
-          if (width === 'reset') {
-            width = '';
-          }
-          article.css('width', width);
-          $(window).resize();
-        });
-      });
-      </script>
     </div>
   </section>
 
@@ -277,21 +271,43 @@ article.large p {
     <code><pre>
 $(function () {
 
-  $.breakpoints({
-    '.layout': {
-      'col-1': [0, 550],
-      'col-2': [550, 1000],
-      'col-3': [1000, null]
-    },
-    'article': {
-      'small': [0, 350],
-      'medium': [350, 450],
-      'large': [450, null]
-    }
-  });
+  Reusables.Breakpoints.on('.layout')
+    .define([0, 550], { name: 'col-1' })
+    .define([550, 1000], { name: 'col-2' })
+    .define([1000, null], { name: 'col-3' });
+
+  Reusables.Breakpoints.on('article')
+    .define([0, 350], { name: 'small' })
+    .define([350, 450], { name: 'medium' })
+    .define([450, Infinity], { name: 'large' });
 
 });
     </pre></code>
+    <script>
+    $(function () {
+
+      Reusables.Breakpoints.on('.example-responsive-layout .layout')
+        .define([0, 550], { name: 'col-1' })
+        .define([550, 1000], { name: 'col-2' })
+        .define([1000, null], { name: 'col-3' });
+
+      Reusables.Breakpoints.on('.example-responsive-layout article')
+        .define([0, 350], { name: 'small' })
+        .define([350, 450], { name: 'medium' })
+        .define([450, Infinity], { name: 'large' });
+
+      $('.example-responsive-layout').on('click', '.controls input[type=button]', function (event) {
+        var $el = $(this);
+        var width = $el.val();
+        var layout = $el.closest('.example-responsive-layout').find('.figure .layout');
+        if (width === 'reset') {
+          width = '';
+        }
+        layout.css('width', width);
+        $(window).resize();
+      });
+    });
+    </script>
 
     <h3>Result</h3>
 
@@ -353,6 +369,10 @@ $(function () {
       </div><!-- /.figure -->
 
       <style>
+      .example-responsive-layout {
+        overflow: hidden;
+      }
+
       .example-responsive-layout .figure {
         max-width: none;
         margin-right: 10px;
@@ -393,33 +413,275 @@ $(function () {
       }
       </style>
 
-      <script>
-      $(function () {
-        $.breakpoints({
-          '.example-responsive-layout .figure .layout': {
-            'col-1': [0, 550],
-            'col-2': [550, 1000],
-            'col-3': [1000, null]
-          },
-          '.example-responsive-layout .figure .layout article': {
-            'small': [0, 350],
-            'medium': [350, 450],
-            'large': [450, null]
-          }
+    </div><!-- /.example-responsive-layout -->
+  </section>
+
+  <section>
+    <h2>4. Adding Callbacks</h2>
+
+    <p>Executing javascript on entering and exiting breakpoints is simple. The example below inserts
+      or removes ad placeholders based on layout, inserting them after every 2, 4, or 6 articles, so
+      that they always land between 2 rows of articles.</p>
+
+    <h3>Javascript</h3>
+    <code><pre>
+$(function () {
+
+  var makeAd = function (name, width, height) {
+    console.log(name);
+    var $ad = $('<img class="ad">');
+    $ad.attr('src', 'http://placehold.it/' + width + 'x' + height + '/83C659/fff.png&text=Ad+Placeholder');
+    $ad.addClass(name);
+    return $ad;
+  };
+
+  var insertAds = function ($layout, frequency, width, height, name) {
+    var $articles = $layout.find('article');
+    var length = $articles.length;
+    for (var i = frequency; i < length; i += frequency) {
+      var $ad = makeAd(name, width, height);
+      $ad.insertAfter($articles.eq(i - 1));
+    }
+  };
+
+  var removeAds = function ($layout, name) {
+    $layout.find('.' + name).remove();
+  };
+
+  Reusables.Breakpoints.on('.example-callbacks .layout')
+    .define([0, 550], {
+      name: 'col-1',
+      enter: function ($layout) { insertAds($layout, 2, 300, 250, 'ads-every-2'); },
+      exit: function ($layout) { removeAds($layout, 'ads-every-2'); }
+    })
+    .define([550, 1000], {
+      name: 'col-2',
+      enter: function ($layout) { insertAds($layout, 4, 500, 350, 'ads-every-4'); },
+      exit: function ($layout) { removeAds($layout, 'ads-every-4'); }
+    })
+    .define([1000, null], {
+      name: 'col-3',
+      enter: function ($layout) { insertAds($layout, 6, 970, 250, 'ads-every-6'); },
+      exit: function ($layout) { removeAds($layout, 'ads-every-6'); }
+    });
+
+  Reusables.Breakpoints.on('.example-callbacks article')
+    .define([0, 350], { name: 'small' })
+    .define([350, 450], { name: 'medium' })
+    .define([450, Infinity], { name: 'large' });
+
+  $('.example-callbacks').on('click', '.controls input[type=button]', function (event) {
+    var $el = $(this);
+    var width = $el.val();
+    var layout = $el.closest('.example-callbacks').find('.figure .layout');
+    if (width === 'reset') {
+      width = '';
+    }
+    layout.css('width', width);
+    $(window).resize();
+  });
+});
+    </pre></code>
+    <script>
+    $(function () {
+
+      var makeAd = function (name, width, height) {
+        console.log(name);
+        var $ad = $('<img class="ad">');
+        $ad.attr('src', 'http://placehold.it/' + width + 'x' + height + '/83C659/fff.png&text=Ad+Placeholder');
+        $ad.addClass(name);
+        return $ad;
+      };
+
+      var insertAds = function ($layout, frequency, width, height, name) {
+        var $articles = $layout.find('article');
+        var length = $articles.length;
+        for (var i = frequency; i < length; i += frequency) {
+          var $ad = makeAd(name, width, height);
+          $ad.insertAfter($articles.eq(i - 1));
+        }
+      };
+
+      var removeAds = function ($layout, name) {
+        $layout.find('.' + name).remove();
+      };
+
+      Reusables.Breakpoints.on('.example-callbacks .layout')
+        .define([0, 550], {
+          name: 'col-1',
+          enter: function ($layout) { insertAds($layout, 2, 300, 250, 'ads-every-2'); },
+          exit: function ($layout) { removeAds($layout, 'ads-every-2'); }
+        })
+        .define([550, 1000], {
+          name: 'col-2',
+          enter: function ($layout) { insertAds($layout, 4, 500, 350, 'ads-every-4'); },
+          exit: function ($layout) { removeAds($layout, 'ads-every-4'); }
+        })
+        .define([1000, null], {
+          name: 'col-3',
+          enter: function ($layout) { insertAds($layout, 6, 970, 250, 'ads-every-6'); },
+          exit: function ($layout) { removeAds($layout, 'ads-every-6'); }
         });
 
-        $('.example-responsive-layout').on('click', '.controls input[type=button]', function (event) {
-          var $el = $(this);
-          var width = $el.val();
-          var layout = $el.closest('.example-responsive-layout').find('.figure .layout');
-          if (width === 'reset') {
-            width = '';
-          }
-          layout.css('width', width);
-          $(window).resize();
-        });
+      Reusables.Breakpoints.on('.example-callbacks article')
+        .define([0, 350], { name: 'small' })
+        .define([350, 450], { name: 'medium' })
+        .define([450, Infinity], { name: 'large' });
+
+      $('.example-callbacks').on('click', '.controls input[type=button]', function (event) {
+        var $el = $(this);
+        var width = $el.val();
+        var layout = $el.closest('.example-callbacks').find('.figure .layout');
+        if (width === 'reset') {
+          width = '';
+        }
+        layout.css('width', width);
+        $(window).resize();
       });
-      </script>
+    });
+    </script>
+
+    <h3>Result</h3>
+
+    <p>Resize your window or use the controls to change the width of the example below.</p>
+
+    <div class="example-callbacks">
+      <p class="controls">
+        <input type="button" value="300px" />
+        <input type="button" value="400px" />
+        <input type="button" value="500px" />
+        <input type="button" value="600px" />
+        <input type="button" value="800px" />
+        <input type="button" value="950px" />
+        <input type="button" value="1000px" />
+        <input type="button" value="1300px" />
+        <input type="button" value="1500px" />
+        <input type="button" value="reset" />
+      </p>
+      <div class="figure">
+
+        <div class="layout">
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+
+          <article>
+            <h1>Article</h1>
+            <img src="http://placehold.it/400x300" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nisl sapien, dignissim ut mauris quis, viverra aliquam diam.</p>
+          </article>
+        </div>
+
+      </div><!-- /.figure -->
+
+      <style>
+      .example-callbacks .figure {
+        max-width: none;
+        margin-right: 10px;
+      }
+
+      .example-callbacks .figure .layout article {
+        float: left;
+        margin-right: 20px;
+      }
+
+      .example-callbacks .figure .layout.col-1 article {
+        width: 100%;
+      }
+
+      .example-callbacks .figure .layout.col-2 article {
+        width: -webkit-calc(50% - 20px);
+        width: calc(50% - 20px);
+      }
+
+      .example-callbacks .figure .layout.col-3 article {
+        width: -webkit-calc(33.33% - 20px);
+        width: calc(33.33% - 20px);
+      }
+
+      .example-callbacks .figure .layout.col-4 article {
+        width: -webkit-calc(25% - 20px);
+        width: calc(25% - 20px);
+      }
+
+      .example-callbacks .figure .layout.col-5 article {
+        width: -webkit-calc(20% - 20px);
+        width: calc(20% - 20px);
+      }
+
+      .example-callbacks .figure .layout.col-6 article {
+        width: -webkit-calc(16.66% - 20px);
+        width: calc(16.66% - 20px);
+      }
+
+      .example-callbacks .figure .layout .ad {
+        display: block;
+        margin: 0 auto 20px;
+      }
+      </style>
+
     </div><!-- /.example-responsive-layout -->
   </section>
 

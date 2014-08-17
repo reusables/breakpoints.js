@@ -1,106 +1,119 @@
-/* * * * * * * * * */
-/*= breakpoints.js =*/
-/* * * * * * * * * */
+var Reusables = Reusables || {};
+Reusables.Breakpoints = (function ($) {
 
-(function ($) {
-
-
-  /*= CLASS DEFINITIONS =*/
-
-  function Breakpoint($elements, name, min, max) {
+  var Breakpoint = function ($elements, range, options) {
     this.$elements = $elements;
-    this.name = name;
-    this.min = min || 0;
-    this.max = max || Infinity;
-  }
+    this.range = range;
+    this.options = options;
 
-  Breakpoint.prototype = {
-    evaluate: function () {
-      var breakpoint = this;
-      this.$elements.each(function (i, el) {
-        var $el = $(el);
-        var width = $el.outerWidth();
-        var match = breakpoint.min <= width && width < breakpoint.max;
-        $el.toggleClass(breakpoint.name, match);
-      });
+    // set elements
+    this.elements = (function () {
+      var isFunction = typeof $elements === 'function';
+      var isString = typeof $elements === 'string';
+      var isJQuery = $elements instanceof jQuery;
+      var hasSelector = isJQuery && !!$elements.selector;
+      var elements;
+
+      if (isFunction) {
+        elements = $elements;
+      } else if (isString) {
+        elements = function () { return $($elements); };
+      } else if (isJQuery && hasSelector) {
+        elements = function () { return $($elements.selector); };
+      } else if (isJQuery) {
+        elements = function () { return $elements; };
+      } else {
+        // ...
+      }
+
+      return elements;
+    })();
+
+    // set range
+    this.min = range[0] || 0;
+    this.max = range[1] || Infinity;
+
+    // set name
+    this.name = (function (name, min, max) {
+      if (name) {
+        return name;
+      }
+
+      // default to breakpoint-{min}-{max}
+      max = max === Infinity ? 'up' : max;
+      return ['breakpoint', min, max].join('-');
+    })(options.name, this.min, this.max);
+
+    // set enter
+    if (typeof options.enter === 'function') {
+      this.enter = options.enter;
+    } else {
+      this.enter = function () {};
     }
-  };
 
+    // set exit
+    if (typeof options.exit === 'function') {
+      this.exit = options.exit;
+    } else {
+      this.exit = function () {};
+    }
 
-
-  /* INTERNALS */
-
-  var breakpoints = [];
-
-  var evaluateBreakpoints = function () {
-    $.each(breakpoints, function (i, breakpoint) {
-      breakpoint.evaluate();
-    });
-  };
-
-
-
-  /* EVENT HANDLERS */
-
-  $(document).on('ready.breakpoints', evaluateBreakpoints);
-  $(window).on('resize.breakpoints', evaluateBreakpoints);
-
-
-
-  /* PLUGIN API */
-
-  /**
-   * Defines a breakpoint for matched elements.
-   *
-   * On document load and window resize, if the element width matches the breakpoint (min <= width < max)
-   * the provided name will be added as a class on the element.
-   *
-   * Example:
-   * ```javascript
-   * $('.slider').breakpoint('small', 0, 320)
-   *   .breakpoint('medium', 320, 480)
-   *   .breakpoint('large', 480, null);
-   *```
-   *
-   * @param String name Breakpoint name. Class name will be added to element for styling.
-   * @param Number min Minimum width for breakpoint. Defaults to 0 if falsy.
-   * @param Number max Maximum width for breakpoint. Defaults to Infinity if falsy.
-   * @return jQuery Returns original jQuery elements for method chaining.
-   */
-  $.fn.breakpoint = function (name, min, max) {
-    breakpoints.push(new Breakpoint(this, name, min, max));
     return this;
   };
 
-
-
-  /**
-   * Defines a set of breakpoints.
-   *
-   * Example:
-   * ```javascript
-   * $.breakpoints({
-   *   '.test': {
-   *     'small': [0, 320],
-   *     'medium': [320, 480],
-   *     'large': [480, null]
-   *   }
-   * });
-   * ```
-   *
-   * @param  Object config jQuery selector strings as keys, list of breakpoints as values. Breakpoint
-   * lists are keyed by breakpoint name. The value of each breakpoint is an array containing the
-   * breakpoint min and max.
-   */
-  $.breakpoints = function (config) {
-    $.each(config, function (selector, breakpoints) {
-      var $elements = $(selector);
-      $.each(breakpoints, function (name, range) {
-        $elements.breakpoint(name, range[0], range[1]);
-      });
+  Breakpoint.prototype.evaluate = function () {
+    var breakpoint = this;
+    breakpoint.elements().each(function (index, element) {
+      var $element = $(element);
+      var width = $element.outerWidth();
+      var matchNow = breakpoint.min <= width && width < breakpoint.max;
+      var matchBefore = $element.hasClass(breakpoint.name);
+      var change = matchNow !== matchBefore;
+      var entering = change && matchNow;
+      var exiting = change && !matchNow;
+      if (entering) {
+        $element.addClass(breakpoint.name);
+        breakpoint.enter($element);
+      } else if (exiting) {
+        $element.removeClass(breakpoint.name);
+        breakpoint.exit($element);
+      }
     });
   };
 
 
+
+  /* PUBLIC */
+
+  var Breakpoints = {};
+
+  var Builder = function ($elements) {
+    this.$elements = $elements;
+  };
+
+  Breakpoints.on = function ($elements) {
+    return new Builder($elements);
+  };
+
+  /* functions that rely on private breakpoints array - want to keep that isolated */
+  (function () {
+    var breakpoints = [];
+    Builder.prototype.define = function (range, options) {
+      breakpoints.push(new Breakpoint(this.$elements, range, options));
+      return this;
+    };
+
+    Breakpoints.evaluate = function () {
+      breakpoints.forEach(function (breakpoint) {
+        breakpoint.evaluate();
+      });
+    };
+  })();
+
+  /* bind events */
+  $(document).on('ready.reusables.breakpoints', Breakpoints.evaluate);
+  $(window).on('resize.reusables.breakpoints', Breakpoints.evaluate);
+
+  return Breakpoints;
 
 })(jQuery);
