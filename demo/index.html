@@ -37,6 +37,12 @@
     margin: 40px 0;
   }
 
+  section:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
   h1, h2 {
     border-bottom: 1px solid #ddd;
   }
@@ -374,10 +380,6 @@ $(function () {
       </div><!-- /.figure -->
 
       <style>
-      .example-responsive-layout {
-        overflow: hidden;
-      }
-
       .example-responsive-layout .figure {
         max-width: none;
         margin-right: 10px;
