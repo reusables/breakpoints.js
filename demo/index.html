@@ -271,12 +271,12 @@ article.large p {
     <code><pre>
 $(function () {
 
-  Reusables.Breakpoints.on('.layout')
+  Reusables.Breakpoints.on('.example-responsive-layout .layout')
     .define([0, 550], { name: 'col-1' })
     .define([550, 1000], { name: 'col-2' })
     .define([1000, null], { name: 'col-3' });
 
-  Reusables.Breakpoints.on('article')
+  Reusables.Breakpoints.on('.example-responsive-layout article')
     .define([0, 350], { name: 'small' })
     .define([350, 450], { name: 'medium' })
     .define([450, Infinity], { name: 'large' });
@@ -470,16 +470,6 @@ $(function () {
     .define([350, 450], { name: 'medium' })
     .define([450, Infinity], { name: 'large' });
 
-  $('.example-callbacks').on('click', '.controls input[type=button]', function (event) {
-    var $el = $(this);
-    var width = $el.val();
-    var layout = $el.closest('.example-callbacks').find('.figure .layout');
-    if (width === 'reset') {
-      width = '';
-    }
-    layout.css('width', width);
-    $(window).resize();
-  });
 });
     </pre></code>
     <script>
