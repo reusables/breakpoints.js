@@ -4,6 +4,8 @@ jQuery plugin that makes modular responsive design possible by adding classes to
 
 See the [demo](http://reusables.io/breakpoints.js/demo/) for a full example.
 
+If you like this library, and want to see more, throw me some change on [gittip](https://www.gittip.com/jstoutenburg/)!
+
 
 
 ## Bower
