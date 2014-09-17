@@ -105,10 +105,12 @@ Reusables.Breakpoints = (function ($) {
     };
 
     Breakpoints.evaluate = function () {
-      breakpoints.forEach(function (breakpoint) {
+      var length = breakpoints.length;
+      for (var i; i < length; i++) {
         breakpoint.evaluate();
-      });
+      }
     };
+
   })();
 
   /* bind events */
