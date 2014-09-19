@@ -106,7 +106,7 @@ Reusables.Breakpoints = (function ($) {
 
     Breakpoints.evaluate = function () {
       var length = breakpoints.length;
-      for (var i; i < length; i++) {
+      for (var i = 0; i < length; i++) {
         breakpoints[i].evaluate();
       }
     };
