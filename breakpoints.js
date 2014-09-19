@@ -69,6 +69,7 @@ Reusables.Breakpoints = (function ($) {
       var matchNow = breakpoint.min <= width && width < breakpoint.max;
       var matchBefore = $element.data(breakpoint.name) || false;
       var change = matchNow !== matchBefore;
+      if (!change) { return; }
       $element.data(breakpoint.name, matchNow);
       var entering = change && matchNow;
       var exiting = change && !matchNow;
