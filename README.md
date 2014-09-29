@@ -1,17 +1,17 @@
 # Breakpoints.js
 
-jQuery plugin that makes modular responsive design possible by adding classes to elements based on defined breakpoints.
+Javascript library that manages breakpoints on elements, toggling classes or executing logic on each element when the element matches the breakpoint.
 
-See the [demo](http://reusables.io/breakpoints.js/demo/) for a full example.
+See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for a full example.
 
-If you like this library, and want to see more, throw me some change on [gittip](https://www.gittip.com/jstoutenburg/)!
+If you like this library, and want to see more, throw us some change on [Gratipay](https://gratipay.com/Reusables.io/)!
 
 
 
 ## Bower
 
 ```shell
-bower install --save breakpoints-js
+bower install --save reusables-breakpoints
 ```
 
 
@@ -19,8 +19,7 @@ bower install --save breakpoints-js
 ## Why?
 
 + __Modularity__: Rather than the style of an element depending on the screen width, I want it to depend
-  on it's own width.
-  I want the element styles to be independent of the surrounding layout.
+  on it's own width. I want the element styles to be independent of the surrounding layout.
 + __Easy to manage__: I want to see all breakpoints for a class of elements in one place, where I can
   easily modify them without mucking around with anything else. I also want all styles for a set of
   elements gathered into one place rather than scattered across many media queries and lost within
@@ -32,29 +31,181 @@ bower install --save breakpoints-js
 
 
 
-## How it works
+## Demo
 
-Configure the breakpoints for a set of elements:
+See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for full examples.
+
+
+
+## API
+
+
+### `Reusables.Breakpoints.on(Function elements)`
+
+Constructs a breakpoint `Builder` object for a set of elements.
+
+__`elements`__
+
+Type: `Function`
+
+A function that is expected to return a `jQuery` object representing the set of elements to define
+breakpoints on. Using a function also guarantees dynamically added elements will be considered when
+evaluating breakpoints. For internal consistency, all other types are converted to a function that
+returns a `jQuery` object. The elements function is called every time breakpoints are evaluated.
+
+__Return__
+
+Type: `Builder`
+
+Returns a `Builder` object for defining breakpoints.
+
+
+### `Reusables.Breakpoints.on(String elements)`
+
+Constructs a breakpoint `Builder` object for a set of elements.
+
+__`elements`__
+
+Type: `String`
+
+A selector string matching the elements to define breakpoints on. For internal consistency, this
+string is used to build a function that returns a `jQuery` object.
+
+__Return__
+
+Type: `Builder`
+
+Returns a `Builder` object for defining breakpoints.
+
+
+### `Reusables.Breakpoints.on(jQuery elements)`
+
+Constructs a breakpoint `Builder` object for a set of elements.
+
+__`elements`__
+
+Type: `jQuery`
+
+A `jQuery` object representing the elements to define breakpoints on. For internal consistency, this
+object will be used to build a function. If this `jQuery` object has a `selector` string, this
+selector string is used to build a function that returns a `jQuery` object. Otherwise, the elements
+function will simply return the `jQuery` object.
+
+__Return__
+
+Type: `Builder`
+
+Returns a `Builder` object for defining breakpoints.
+
+
+### `Builder.define(range, options)`
+
+Defines a breakpoint range on the set of elements that were given to the `Builder` object.
+
+Defined breakpoints are evaluated on document ready and window resize. Evaluating a breakpoint
+involves iterating over each element in the breakpoint definition, determine if it is entering or
+exiting the breakpoint range, and, if entering, add the modifier class and execute the enter
+callback, if there is one, or, if exiting, remove the modifier class and execute the exit callback,
+if there is one. If neither entering or exiting nothing happens.
+
+__`range`__
+
+Type: `Array`
+
+An array containing two integers representing the min and max of the range. Example: `[320, 480]`.
+
+The min is inclusive. The max is excluded. This is so that you don't have to go through the trouble
+of subtracting one from the max. You can also use `Infinity` for the max.
+
+__`options.name`__
+
+Type: `String`
+
+The modifier class attached to the element when it matches the breakpoint. If not specified, the
+default, in the format of `breakpoint-{min}-{max}`, will be added to the element.
+
+__`options.enter`__
+
+Type: `Function`
+
+A callback to execute per element when the element enters the breakpoint range. The element is
+passed to the function.
+
+__`options.exit`__
+
+Type: `Function`
+
+A callback to execute per element when the element exits the breakpoint range. The element is
+passed to the function.
+
+
+
+## Examples
+
+
+### Modifier Classes: Small, Medium, Large
+
+If you have small, medium and large designs for your articles, you can add classes like this:
 
 ```javascript
-  $(function () {
+Reusables.Breakpoints.on($articles)
+  .define([0, 480], { name: 'small' })
+  .define([480, 1024], { name: 'medium' })
+  .define([1024, Infinity], { name: 'large' });
+```
 
-    Reusables.Breakpoints.on('.article')
-      .define([0, 350], { name: 'small' })
-      .define([350, 450], { name: 'medium' })
-      .define([450, Infinity], { name: 'large' });
+### Modifier Classes: Columns
 
+In the same manner, you can use modifier classes to affect the number of columns in a layout:
+
+```javascript
+Reusables.Breakpoints.on($layout)
+  .define([0, 480], { name: 'col-1' })
+  .define([480, 1024], { name: 'col-2' })
+  .define([1024, Infinity], { name: 'col-3' });
+```
+
+### Callbacks: Insert Ads
+
+Perhaps you want to insert ads, despite the number of columns, every two rows of items:
+
+```javascript
+var insertAds = function (interval) { /* insert ads */ };
+var removeAds = function (interval) { /* remove ads */ };
+
+Reusables.Breakpoints.on($layout)
+  .define([0, 480], {
+    name: 'col-1',
+    enter: function () { insertAds(2); },
+    exit: function () { removeAds(2); }
+  })
+  .define([480, 1024], {
+    name: 'col-2',
+    enter: function () { insertAds(4); },
+    exit: function () { removeAds(4); }
+  })
+  .define([1024, Infinity], {
+    name: 'col-3',
+    enter: function () { insertAds(6); },
+    exit: function () { removeAds(6); }
   });
 ```
 
-This example defines breakpoints for all elements matching the `.article` jQuery selector string.
-Each breakpoint has a name (`small`, `medium`, `large`) each with a range of widths.
+Breakpoints just gives you the hooks into your responsive design. How you insert and remove ads is
+up to you. Be careful not to inflate impressions!
 
-The breakpoint name will be added to the element when the element width matches the breakpoint range.
-Once breakpoints are defined, style the modifier classes corresponding to the breakpoints.
+### Callbacks: Setup and Teardown
 
+Perhaps you have an element on the page that is a menu at smaller screens but not on larger screens:
 
+```javascript
+var setupMenu = function () { /* setup menu */ };
+var teardownMenu = function () { /* teardown menu */ };
 
-## Demo
-
-See the [demo](http://reusables.io/breakpoints.js/demo/) for full examples.
+Reusables.Breakpoints.on($(window))
+  .define([0, 768], {
+    name: 'menu',
+    enter: setupMenu,
+    exit: teardownMenu
+  });
+```
