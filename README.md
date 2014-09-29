@@ -40,18 +40,27 @@ See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for full exam
 ## API
 
 
-### `Reusables.Breakpoints.on(Function elements)`
+### `Reusables.Breakpoints.on(Function|String|jQuery elements)`
 
 Constructs a breakpoint `Builder` object for a set of elements.
 
-__`elements`__
+__Params__
 
-Type: `Function`
+`elements`
 
-A function that is expected to return a `jQuery` object representing the set of elements to define
-breakpoints on. Using a function also guarantees dynamically added elements will be considered when
-evaluating breakpoints. For internal consistency, all other types are converted to a function that
-returns a `jQuery` object. The elements function is called every time breakpoints are evaluated.
+Type: `Function|String|jQuery`
+
+If `Function`, it is expected to return a `jQuery` object representing the set of elements to define
+breakpoints on. For internal consistency, all other types are converted to a function that returns
+a `jQuery` object. The elements function is called every time breakpoints are evaluated.
+
+If `String`, a selector string matching the elements to define breakpoints on. This string is used
+to build a function that returns a `jQuery` object.
+
+If `jQuery`, a `jQuery` object representing the elements to define breakpoints on. This object will
+be used to build a function. If this `jQuery` object has a `selector` string, this selector string
+is used to build a function that returns a `jQuery` object. Otherwise, the elements function will
+simply return the `jQuery` object.
 
 __Return__
 
@@ -60,45 +69,7 @@ Type: `Builder`
 Returns a `Builder` object for defining breakpoints.
 
 
-### `Reusables.Breakpoints.on(String elements)`
-
-Constructs a breakpoint `Builder` object for a set of elements.
-
-__`elements`__
-
-Type: `String`
-
-A selector string matching the elements to define breakpoints on. For internal consistency, this
-string is used to build a function that returns a `jQuery` object.
-
-__Return__
-
-Type: `Builder`
-
-Returns a `Builder` object for defining breakpoints.
-
-
-### `Reusables.Breakpoints.on(jQuery elements)`
-
-Constructs a breakpoint `Builder` object for a set of elements.
-
-__`elements`__
-
-Type: `jQuery`
-
-A `jQuery` object representing the elements to define breakpoints on. For internal consistency, this
-object will be used to build a function. If this `jQuery` object has a `selector` string, this
-selector string is used to build a function that returns a `jQuery` object. Otherwise, the elements
-function will simply return the `jQuery` object.
-
-__Return__
-
-Type: `Builder`
-
-Returns a `Builder` object for defining breakpoints.
-
-
-### `Builder.define(range, options)`
+### `Builder.define(Array range, Object options)`
 
 Defines a breakpoint range on the set of elements that were given to the `Builder` object.
 
@@ -108,7 +79,9 @@ exiting the breakpoint range, and, if entering, add the modifier class and execu
 callback, if there is one, or, if exiting, remove the modifier class and execute the exit callback,
 if there is one. If neither entering or exiting nothing happens.
 
-__`range`__
+__Params__
+
+`range`
 
 Type: `Array`
 
@@ -117,21 +90,21 @@ An array containing two integers representing the min and max of the range. Exam
 The min is inclusive. The max is excluded. This is so that you don't have to go through the trouble
 of subtracting one from the max. You can also use `Infinity` for the max.
 
-__`options.name`__
+`options.name`
 
 Type: `String`
 
 The modifier class attached to the element when it matches the breakpoint. If not specified, the
 default, in the format of `breakpoint-{min}-{max}`, will be added to the element.
 
-__`options.enter`__
+`options.enter`
 
 Type: `Function`
 
 A callback to execute per element when the element enters the breakpoint range. The element is
 passed to the function.
 
-__`options.exit`__
+`options.exit`
 
 Type: `Function`
 
