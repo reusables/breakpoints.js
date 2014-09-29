@@ -31,29 +31,6 @@ bower install --save reusables-breakpoints
 
 
 
-## How it works
-
-Configure the breakpoints for a set of elements:
-
-```javascript
-  $(function () {
-
-    Reusables.Breakpoints.on('.article')
-      .define([0, 350], { name: 'small' })
-      .define([350, 450], { name: 'medium' })
-      .define([450, Infinity], { name: 'large' });
-
-  });
-```
-
-This example defines breakpoints for all elements matching the `.article` jQuery selector string.
-Each breakpoint has a name (`small`, `medium`, `large`) each with a range of widths.
-
-The breakpoint name will be added to the element when the element width matches the breakpoint range.
-Once breakpoints are defined, style the modifier classes corresponding to the breakpoints.
-
-
-
 ## Demo
 
 See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for full examples.
@@ -160,3 +137,75 @@ Type: `Function`
 
 A callback to execute per element when the element exits the breakpoint range. The element is
 passed to the function.
+
+
+
+## Examples
+
+
+### Modifier Classes: Small, Medium, Large
+
+If you have small, medium and large designs for your articles, you can add classes like this:
+
+```javascript
+Reusables.Breakpoints.on($articles)
+  .define([0, 480], { name: 'small' })
+  .define([480, 1024], { name: 'medium' })
+  .define([1024, Infinity], { name: 'large' });
+```
+
+### Modifier Classes: Columns
+
+In the same manner, you can use modifier classes to affect the number of columns in a layout:
+
+```javascript
+Reusables.Breakpoints.on($layout)
+  .define([0, 480], { name: 'col-1' })
+  .define([480, 1024], { name: 'col-2' })
+  .define([1024, Infinity], { name: 'col-3' });
+```
+
+### Callbacks: Insert Ads
+
+Perhaps you want to insert ads, despite the number of columns, every two rows of items:
+
+```javascript
+var insertAds = function (interval) { /* insert ads */ };
+var removeAds = function (interval) { /* remove ads */ };
+
+Reusables.Breakpoints.on($layout)
+  .define([0, 480], {
+    name: 'col-1',
+    enter: function () { insertAds(2); },
+    exit: function () { removeAds(2); }
+  })
+  .define([480, 1024], {
+    name: 'col-2',
+    enter: function () { insertAds(4); },
+    exit: function () { removeAds(4); }
+  })
+  .define([1024, Infinity], {
+    name: 'col-3',
+    enter: function () { insertAds(6); },
+    exit: function () { removeAds(6); }
+  });
+```
+
+Breakpoints just gives you the hooks into your responsive design. How you insert and remove ads is
+up to you. Be careful not to inflate impressions!
+
+### Callbacks: Setup and Teardown
+
+Perhaps you have an element on the page that is a menu at smaller screens but not on larger screens:
+
+```javascript
+var setupMenu = function () { /* setup menu */ };
+var teardownMenu = function () { /* teardown menu */ };
+
+Reusables.Breakpoints.on($(window))
+  .define([0, 768], {
+    name: 'menu',
+    enter: setupMenu,
+    exit: teardownMenu
+  });
+```
