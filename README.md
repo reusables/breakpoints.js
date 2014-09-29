@@ -122,9 +122,9 @@ If you have small, medium and large designs for your articles, you can add class
 
 ```javascript
 Reusables.Breakpoints.on($articles)
-  .define([0, 480], { name: 'small' })
-  .define([480, 1024], { name: 'medium' })
-  .define([1024, Infinity], { name: 'large' });
+  .define([0, 350], { name: 'small' })
+  .define([350, 450], { name: 'medium' })
+  .define([450, Infinity], { name: 'large' });
 ```
 
 ### Modifier Classes: Columns
