@@ -69,7 +69,7 @@ Type: `Builder`
 Returns a `Builder` object for defining breakpoints.
 
 
-### `Builder.define(range, options)`
+### `Builder.define(Array range, Object options)`
 
 Defines a breakpoint range on the set of elements that were given to the `Builder` object.
 
