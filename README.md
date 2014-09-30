@@ -40,7 +40,7 @@ See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for full exam
 ## API
 
 
-### `Reusables.Breakpoints.on(Function|String|jQuery elements)`
+### `Reusables.Breakpoints.on(elements)`
 
 Constructs a breakpoint `Builder` object for a set of elements.
 
@@ -69,7 +69,7 @@ Type: `Builder`
 Returns a `Builder` object for defining breakpoints.
 
 
-### `Builder.define(Array range, Object options)`
+### `Builder.define(range, options)`
 
 Defines a breakpoint range on the set of elements that were given to the `Builder` object.
 
