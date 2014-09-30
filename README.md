@@ -1,8 +1,9 @@
 # Breakpoints.js
 
-Javascript library that manages breakpoints on elements, toggling classes or executing logic on each element when the element matches the breakpoint.
+Javascript library that manages breakpoints on elements, toggling classes or executing logic on each
+element when the element matches the breakpoint.
 
-See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for a full example.
+See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for working examples.
 
 If you like this library, and want to see more, throw us some change on [Gratipay](https://gratipay.com/Reusables.io/)!
 
@@ -33,7 +34,7 @@ bower install --save reusables-breakpoints
 
 ## Demo
 
-See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for full examples.
+See the [demo](http://reusables.io/breakpoints.js/demo/index.html) for working examples.
 
 
 
