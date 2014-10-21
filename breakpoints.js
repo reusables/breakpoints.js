@@ -1,6 +1,22 @@
 var Reusables = Reusables || {};
 Reusables.Breakpoints = (function ($) {
 
+  var Queue = function () {
+    var callbacks = [];
+
+    this.push = function (callback) {
+      callbacks.push(callback);
+    };
+
+    this.process = function () {
+      while (callbacks.length !== 0) {
+        (callbacks.pop())();
+      }
+    };
+  };
+
+  var enterQueue = new Queue();
+
   var Breakpoint = function ($elements, range, options) {
     this.$elements = $elements;
     this.range = range;
@@ -74,8 +90,10 @@ Reusables.Breakpoints = (function ($) {
       var entering = change && matchNow;
       var exiting = change && !matchNow;
       if (entering) {
-        $element.addClass(breakpoint.name);
-        breakpoint.enter($element);
+        enterQueue.push(function () {
+          $element.addClass(breakpoint.name);
+          breakpoint.enter($element);
+        });
       } else if (exiting) {
         $element.removeClass(breakpoint.name);
         breakpoint.exit($element);
@@ -110,6 +128,7 @@ Reusables.Breakpoints = (function ($) {
       for (var i = 0; i < length; i++) {
         breakpoints[i].evaluate();
       }
+      enterQueue.process();
     };
 
   })();
