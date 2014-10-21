@@ -10,7 +10,7 @@ Reusables.Breakpoints = (function ($) {
 
     this.process = function () {
       while (callbacks.length !== 0) {
-        (callbacks.unshift())();
+        (callbacks.pop())();
       }
     };
   };
