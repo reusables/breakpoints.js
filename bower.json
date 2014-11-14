@@ -1,7 +1,6 @@
 {
   "name": "breakpoints-js",
   "main": "breakpoints.js",
-  "version": "0.0.9",
   "homepage": "https://github.com/reusables/breakpoints.js",
   "authors": [
     "Joshua Stoutenburg <jehoshua02@gmail.com>"
