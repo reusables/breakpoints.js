@@ -1,6 +1,15 @@
 var Reusables = Reusables || {};
 Reusables.Breakpoints = (function ($) {
 
+  var generateKey = (function () {
+    var nextKey = 1;
+    return function () {
+      var key = 'breakpoint-' + nextKey;
+      nextKey++;
+      return key;
+    };
+  })();
+
   var Queue = function () {
     var callbacks = [];
 
@@ -21,6 +30,7 @@ Reusables.Breakpoints = (function ($) {
     this.$elements = $elements;
     this.range = range;
     this.options = options;
+    this.key = generateKey();
 
     // set elements
     this.elements = (function () {
@@ -83,10 +93,10 @@ Reusables.Breakpoints = (function ($) {
       var $element = $(element);
       var width = $element.outerWidth();
       var matchNow = breakpoint.min <= width && width < breakpoint.max;
-      var matchBefore = $element.data(breakpoint.name) || false;
+      var matchBefore = $element.data(breakpoint.key) || false;
       var change = matchNow !== matchBefore;
       if (!change) { return; }
-      $element.data(breakpoint.name, matchNow);
+      $element.data(breakpoint.key, matchNow);
       var entering = change && matchNow;
       var exiting = change && !matchNow;
       if (entering) {
